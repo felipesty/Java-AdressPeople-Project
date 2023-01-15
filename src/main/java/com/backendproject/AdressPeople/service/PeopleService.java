@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.backendproject.AdressPeople.entities.People;
@@ -27,16 +25,6 @@ public class PeopleService {
 	
 	public Optional<People> findById(Long id) {
 		return peopleRepository.findById(id);
-	}
-	
-	public void removeById(Long id) {
-		try {
-			peopleRepository.deleteById(id);
-		} catch (EmptyResultDataAccessException e) {
-			throw new RuntimeException("Id nao encontrado");
-		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityViolationException(e.getMessage());
-		}
 	}
 	
 	public People update(Long id, People people) {

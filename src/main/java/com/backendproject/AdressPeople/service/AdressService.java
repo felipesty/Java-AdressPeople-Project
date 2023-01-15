@@ -19,13 +19,13 @@ public class AdressService {
 	@Autowired
 	private PeopleRepository peopleRepository;
 	
-	public Adress save(Long id, Adress endereco) {
+	public Adress save(Long id, Adress adress) {
         People people = peopleRepository.findById(id).orElse(null);
         if (people == null) {
             throw new IllegalArgumentException("Pessoa não encontrada");
         }
-        endereco.setPeople(people);
-        return adressRepository.save(endereco);
+        adress.setPeople(people);
+        return adressRepository.save(adress);
     }
 
     public Adress update(Long id, Long idAdress, Adress adress) {
