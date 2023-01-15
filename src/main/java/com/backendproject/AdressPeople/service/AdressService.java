@@ -28,7 +28,7 @@ public class AdressService {
 	        adress.setPeople(people);
 	        return adressRepository.save(adress);
 		} catch (Exception e) {
-			throw new RuntimeException("erro ao criar endereço " + e.getMessage());
+			throw new IllegalStateException("erro ao criar endereço ");
 		}
         
     }

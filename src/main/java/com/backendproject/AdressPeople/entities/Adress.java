@@ -1,8 +1,10 @@
 package com.backendproject.AdressPeople.entities;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-import jakarta.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,23 +12,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Adress {
+public class Adress implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(nullable = false)
 	private String district;
-	
-	@Column(nullable = false, length=8)
-	private String cep;
-	
+	private String cep;	
 	private String number;
-	
-	@Column(nullable = false)
 	private String city;
-	
 	private boolean main;
+	@JsonIgnore
 	@ManyToOne
 	private People people;
 	
