@@ -23,7 +23,7 @@ public class PeopleService {
 		}
 	}
 	
-	public List<People> listPeople() {
+	public List<People> findAll() {
 		try {
 			return peopleRepository.findAll();
 		} catch (Exception e) {
