@@ -2,6 +2,7 @@ package com.backendproject.AdressPeople.entities;
 
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,10 +14,18 @@ public class Adress {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(nullable = false)
 	private String district;
+	
+	@Column(nullable = false, length=8)
 	private String cep;
+	
 	private String number;
+	
+	@Column(nullable = false)
 	private String city;
+	
 	private boolean main;
 	@ManyToOne
 	private People people;

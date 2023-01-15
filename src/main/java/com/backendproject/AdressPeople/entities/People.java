@@ -25,6 +25,8 @@ public class People implements Serializable {
 	
 	@Column(nullable = false)
 	private String name;
+	
+	@Column(nullable = false)
 	private Date birthDate;
 	@OneToMany(mappedBy = "people", cascade = CascadeType.ALL)
     private List<Adress> adress;
