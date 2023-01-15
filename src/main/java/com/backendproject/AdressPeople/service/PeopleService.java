@@ -16,23 +16,40 @@ public class PeopleService {
 	private PeopleRepository peopleRepository;
 	
 	public People save(People people) {
-		return peopleRepository.save(people);
+		try {
+			return peopleRepository.save(people);
+		} catch (Exception e) {
+			throw new RuntimeException("erro ao criar pessoa " + e.getMessage());
+		}
 	}
 	
 	public List<People> listPeople() {
-		return peopleRepository.findAll();
+		try {
+			return peopleRepository.findAll();
+		} catch (Exception e) {
+			throw new RuntimeException("erro ao listar pessoas " + e.getMessage());
+		}
 	}
 	
 	public Optional<People> findById(Long id) {
-		return peopleRepository.findById(id);
+		try {
+			return peopleRepository.findById(id);
+		} catch (Exception e) {
+			throw new RuntimeException("erro ao listar pessoas " + e.getMessage());
+		}
 	}
 	
 	public People update(Long id, People people) {
-		People oldPeople = peopleRepository.findById(id).orElse(null);
-        if (oldPeople == null) {
-            throw new RuntimeException("Pessoa não encontrada");
-        }
-        people.setId(id);
-        return peopleRepository.save(people);
+		try {
+			People oldPeople = peopleRepository.findById(id).orElse(null);
+	        if (oldPeople == null) {
+	            throw new RuntimeException("Pessoa não encontrada");
+	        }
+	        people.setId(id);
+	        return peopleRepository.save(people);
+		} catch (Exception e) {
+			throw new RuntimeException("erro ao atualizar pessoa " + e.getMessage());
+		}
+		
     }
 }

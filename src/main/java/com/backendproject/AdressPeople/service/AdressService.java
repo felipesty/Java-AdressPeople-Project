@@ -20,54 +20,50 @@ public class AdressService {
 	private PeopleRepository peopleRepository;
 	
 	public Adress save(Long id, Adress adress) {
-        People people = peopleRepository.findById(id).orElse(null);
-        if (people == null) {
-            throw new IllegalArgumentException("Pessoa não encontrada");
-        }
-        adress.setPeople(people);
-        return adressRepository.save(adress);
-    }
-
-    public Adress update(Long id, Long idAdress, Adress adress) {
-    	People people = peopleRepository.findById(id).orElse(null);
-        if (people == null) {
-            throw new IllegalArgumentException("Pessoa não encontrada");
-        }
-        adress.setId(idAdress);
-        adress.setPeople(people);
-        return adressRepository.save(adress);
-    }
-
-    public Adress findById(Long id, Long idAdress) {
-    	People people = peopleRepository.findById(id).orElse(null);
-        if (people == null) {
-            throw new IllegalArgumentException("Pessoa não encontrada");
-        }
-        return adressRepository.findById(idAdress).orElse(null);
+		try {
+			People people = peopleRepository.findById(id).orElse(null);
+	        if (people == null) {
+	            throw new IllegalArgumentException("Pessoa não encontrada");
+	        }
+	        adress.setPeople(people);
+	        return adressRepository.save(adress);
+		} catch (Exception e) {
+			throw new RuntimeException("erro ao criar endereço " + e.getMessage());
+		}
+        
     }
 
     public List<Adress> findAll(Long id) {
-    	People people = peopleRepository.findById(id).orElse(null);
-        if (people == null) {
-            throw new IllegalArgumentException("Pessoa não encontrada");
-        }
-        return adressRepository.findByPeople(people);
+    	try {
+    		People people = peopleRepository.findById(id).orElse(null);
+            if (people == null) {
+                throw new IllegalArgumentException("Pessoa não encontrada");
+            }
+            return adressRepository.findByPeople(people);
+		} catch (Exception e) {
+			throw new RuntimeException("erro ao listar endereços " + e.getMessage());
+		}
+    	
     }
 
     public Adress setMainAdress(Long id, Long idAdress) {
-    	People people = peopleRepository.findById(id).orElse(null);
-        if (people == null) {
-            throw new IllegalArgumentException("Pessoa não encontrada");
-        }
-        List<Adress> listAdress = adressRepository.findByPeople(people);
-        for (Adress adress : listAdress) {
-            if (adress.getId().equals(idAdress)) {
-            	adress.setMain(true);
-            } else {
-            	adress.setMain(false);
+    	try {
+    		People people = peopleRepository.findById(id).orElse(null);
+            if (people == null) {
+                throw new IllegalArgumentException("Pessoa não encontrada");
             }
-            adressRepository.save(adress);
-        }
-        return adressRepository.findById(idAdress).orElse(null);
+            List<Adress> listAdress = adressRepository.findByPeople(people);
+            for (Adress adress : listAdress) {
+                if (adress.getId().equals(idAdress)) {
+                	adress.setMain(true);
+                } else {
+                	adress.setMain(false);
+                }
+                adressRepository.save(adress);
+            }
+            return adressRepository.findById(idAdress).orElse(null);
+		} catch (Exception e) {
+			throw new RuntimeException("erro ao atualizar endereço principal " + e.getMessage());
+		}
     }
 }
