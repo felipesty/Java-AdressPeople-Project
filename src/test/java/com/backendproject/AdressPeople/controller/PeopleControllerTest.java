@@ -37,7 +37,6 @@ public class PeopleControllerTest {
 	@MockBean
 	private PeopleService peopleService;
 	
-	
 	People PEOPLE = new People(1L, "Felipe", new Date());
 	People PEOPLE2 = new People(2L, "July", new Date());
 
@@ -84,18 +83,15 @@ public class PeopleControllerTest {
 	@Test
 	public void testUpdate() throws Exception {
 		
-        Mockito.when(peopleService.save(PEOPLE)).thenReturn(PEOPLE);
-
+        Mockito.when(peopleService.update(1L, PEOPLE2)).thenReturn(PEOPLE2);
 		
-		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.post("/people")
+		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = MockMvcRequestBuilders.put("/people/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .content(this.mapper.writeValueAsString(PEOPLE));
+                .content(this.mapper.writeValueAsString(PEOPLE2));
 
         mockMvc.perform(mockHttpServletRequestBuilder)
-                .andExpect(status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$",Matchers.notNullValue()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is("Felipe")));
-		
+                .andExpect(status().isNoContent())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is("July")));
 	}
 }
